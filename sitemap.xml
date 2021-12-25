@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+  xmlns:xhtml="http://www.w3.org/1999/xhtml">
+  
+  <url>
+    <loc>https://halixness.github.com/categories/</loc>
+    <lastmod>2021-11-21T22:59:01+01:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://halixness.github.com/tags/cv/</loc>
+    <lastmod>2021-11-21T22:59:01+01:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://halixness.github.com/</loc>
+    <lastmod>2021-11-21T22:59:01+01:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://halixness.github.com/categories/machine-learning/</loc>
+    <lastmod>2021-11-21T22:59:01+01:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://halixness.github.com/posts/</loc>
+    <lastmod>2021-11-21T22:59:01+01:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://halixness.github.com/tags/</loc>
+    <lastmod>2021-11-21T22:59:01+01:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://halixness.github.com/tags/transformers/</loc>
+    <lastmod>2021-11-21T22:59:01+01:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://halixness.github.com/posts/hello-world/</loc>
+    <lastmod>2021-11-21T22:59:01+01:00</lastmod>
+  </url>
+  
+</urlset>
