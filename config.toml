@@ -1,0 +1,38 @@
+# https://levelup.gitconnected.com/build-a-personal-website-with-github-pages-and-hugo-6c68592204c7
+
+baseURL = "https://halixness.github.com"
+languageCode = "en-us"
+title = "Diego Calanzone"
+
+theme = "solar-theme-hugo"
+Copyright = "© Diego Calanzone 2021"
+canonifyurls = true
+
+paginate = 5
+pygmentsStyle = "solarized-dark" # solarized-light, -dark or -dark256
+
+[params]
+  scheme = "gray" # light, dark, gray or preference
+  description = "Deep learning student, software engineer @ Viceversa."
+  pygmentsCodeFences = true
+  pygmentsUseClasses = true
+  email = "diegocalanzone@gmail.com"
+
+[socials]
+  github = "Halixness"
+  linkedin = "Diego Calanzone"
+
+[menu]
+  [[menu.main]]
+    name = "Blog"
+    url = "/posts"
+  [[menu.main]]
+    name = "Work"
+    url = "#"
+  [[menu.main]]
+    name = "About"
+    url = "/about"
+    
+[taxonomies]
+  category = 'categories'
+  tag = 'tags'
