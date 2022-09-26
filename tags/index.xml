@@ -1,1 +1,66 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Tags on Diego Calanzone</title><link>https://halixness.github.io/tags/</link><description>Recent content in Tags on Diego Calanzone</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><copyright>© Diego Calanzone 2021</copyright><lastBuildDate>Fri, 31 Dec 2021 13:00:01 +0100</lastBuildDate><atom:link href="https://halixness.github.io/tags/index.xml" rel="self" type="application/rss+xml"/><item><title>psychology</title><link>https://halixness.github.io/tags/psychology/</link><pubDate>Fri, 31 Dec 2021 13:00:01 +0100</pubDate><guid>https://halixness.github.io/tags/psychology/</guid><description/></item><item><title>social media</title><link>https://halixness.github.io/tags/social-media/</link><pubDate>Fri, 31 Dec 2021 13:00:01 +0100</pubDate><guid>https://halixness.github.io/tags/social-media/</guid><description/></item><item><title>society</title><link>https://halixness.github.io/tags/society/</link><pubDate>Fri, 31 Dec 2021 13:00:01 +0100</pubDate><guid>https://halixness.github.io/tags/society/</guid><description/></item><item><title>exercise</title><link>https://halixness.github.io/tags/exercise/</link><pubDate>Wed, 29 Dec 2021 13:35:01 +0100</pubDate><guid>https://halixness.github.io/tags/exercise/</guid><description/></item><item><title>longevity</title><link>https://halixness.github.io/tags/longevity/</link><pubDate>Wed, 29 Dec 2021 13:35:01 +0100</pubDate><guid>https://halixness.github.io/tags/longevity/</guid><description/></item><item><title>prevention</title><link>https://halixness.github.io/tags/prevention/</link><pubDate>Wed, 29 Dec 2021 13:35:01 +0100</pubDate><guid>https://halixness.github.io/tags/prevention/</guid><description/></item></channel></rss>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Tags on Diego Calanzone</title>
+    <link>https://halixness.github.io/tags/</link>
+    <description>Recent content in Tags on Diego Calanzone</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <copyright>© Diego Calanzone 2021</copyright>
+    <lastBuildDate>Fri, 31 Dec 2021 13:00:01 +0100</lastBuildDate><atom:link href="https://halixness.github.io/tags/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>psychology</title>
+      <link>https://halixness.github.io/tags/psychology/</link>
+      <pubDate>Fri, 31 Dec 2021 13:00:01 +0100</pubDate>
+      
+      <guid>https://halixness.github.io/tags/psychology/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>social media</title>
+      <link>https://halixness.github.io/tags/social-media/</link>
+      <pubDate>Fri, 31 Dec 2021 13:00:01 +0100</pubDate>
+      
+      <guid>https://halixness.github.io/tags/social-media/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>society</title>
+      <link>https://halixness.github.io/tags/society/</link>
+      <pubDate>Fri, 31 Dec 2021 13:00:01 +0100</pubDate>
+      
+      <guid>https://halixness.github.io/tags/society/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>exercise</title>
+      <link>https://halixness.github.io/tags/exercise/</link>
+      <pubDate>Wed, 29 Dec 2021 13:35:01 +0100</pubDate>
+      
+      <guid>https://halixness.github.io/tags/exercise/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>longevity</title>
+      <link>https://halixness.github.io/tags/longevity/</link>
+      <pubDate>Wed, 29 Dec 2021 13:35:01 +0100</pubDate>
+      
+      <guid>https://halixness.github.io/tags/longevity/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>prevention</title>
+      <link>https://halixness.github.io/tags/prevention/</link>
+      <pubDate>Wed, 29 Dec 2021 13:35:01 +0100</pubDate>
+      
+      <guid>https://halixness.github.io/tags/prevention/</guid>
+      <description></description>
+    </item>
+    
+  </channel>
+</rss>
