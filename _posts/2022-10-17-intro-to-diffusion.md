@@ -61,7 +61,7 @@ _styles: >
 
 In Deep Learning, generative models learn and sample from a (usually) multivariate distribution. Auto-encoders (AE) are part of a class of algorithms usually designed with smaller hidden layers, an "information bottleneck", which force learning "compressed" representations of data. With this approach, the learned distribution results sparse and possibly overfitted: Variational Auto Encoders (VAE) tackle this issue as they force to model latent representations with a probability distribution, such as a multi-variate Gaussian, for more smoothness.
 
-Diffusion ([Sohl-Dickstein et al., 2015](https://arxiv.org/abs/1503.03585)) is inspired by thermodynamics and over the last 2-3 years it has become one a very popular approach. Compared to Generative Adversarial Networks (GANs), VAE and AE, Diffusion allows a tradeoff between speed of sampling, fidelity and coverage of the data distribution (figure 1),  the approach consists in noising/denoising processes of usually-high dimensional feature vectors.
+Diffusion ([Sohl-Dickstein et al., 2015](https://arxiv.org/abs/1503.03585)) is inspired by thermodynamics and over the last 2-3 years it has become a very popular approach. Compared to Generative Adversarial Networks (GANs), VAE and AE, Diffusion allows a tradeoff between speed of sampling, fidelity and coverage of the data distribution (figure 1),  the approach consists in noising/denoising processes of usually-high dimensional feature vectors.
 
 This post aims to provide a broad and complete overview from the foundations to the most crucial achievements. I will not dive in derivations and mathematical intuition, which are covered in [this excellent post by Lilian Weng](https://lilianweng.github.io/posts/2021-07-11-diffusion-models/). To explore further learning resources and applications, I suggest [this rich github repo](https://github.com/heejkoo/Awesome-Diffusion-Models) and [this survey](https://arxiv.org/pdf/2209.04747.pdf).
 
@@ -190,7 +190,7 @@ As further improvement, the paper [(Song et.al, 2021)](https://arxiv.org/pdf/201
 There are two measures that will be used in the following research literature to evaluate generative models:
 
 - [IS (Inception Score):](https://en.wikipedia.org/wiki/Inception_score) a measure for class variety and sample unicity in the generated samples.
-- [FID (Fréchet Incept Store):](https://en.wikipedia.org/wiki/Frechet_inception_distance) Frechét distance between the generated samples and training samples. Both feed to an Inception v3 network, the mean and std. dev. of the deepest layer (similarly to how human neurons process abstract concepts).
+- [FID (Fréchet Inception Distance):](https://en.wikipedia.org/wiki/Frechet_inception_distance) Frechét distance between the generated and the original samples. Both fed to an Inception v3 network (similarly to how human neurons process abstract concepts), the metric is computed on the mean and std. dev. of the logits of the deepest layer.
 
 ## Deterministic Diffusion Models
 
@@ -356,9 +356,9 @@ This means the choice of  $R$ is irrelevant, the restoration would occur the sam
 - 2x downsampling
 - Snowification
 
-For **generative behavior**, DDPM benefit from the fact that the noisy, latent variable $x_t$ is an isotropic Gaussian → it is possible to sample a random point and apply the denoising iteration. 
+For **generative behavior**, DDPM benefit from the fact that the noisy, latent variable $x_t$ is an isotropic Gaussian, thus it is possible to sample a random point and apply the denoising iteration. 
 
-For deterministic transformations, the latent variable $x_t$ is modeled with an appropriate distribution to similarly sample a random point and perform restoration. In case of **blurring**, $x_t$ is found to be constant (same color for every pixel) for large $T$, since such color is the mean of the RGB image $x_0$ → you can use a *gaussian mixture model (GMM)* to sample random $\hat{x_t}$. Such technique yields high fidelity but low diversity (perfect symmetry) to the training data distribution, thus a small amount of Gaussian noise is added to each sampled $\hat{x_t}$, with drastically better results.
+For deterministic transformations, the latent variable $x_t$ is modeled with an appropriate distribution to similarly sample a random point and perform restoration. In case of **blurring**, $x_t$ is found to be constant (same color for every pixel) for large $T$, since such color is the mean of the RGB image $x_0$, you can use a *gaussian mixture model (GMM)* to sample random $\hat{x_t}$. Such technique yields high fidelity but low diversity (perfect symmetry) to the training data distribution, thus a small amount of Gaussian noise is added to each sampled $\hat{x_t}$, with drastically better results.
 
 Results show **cold diffusion** (deterministic, where **hot** = highest stochasticity) achieves higher [Fréchet Inception Distance (FID)](https://en.wikipedia.org/wiki/Frechet_inception_distance) (lower distance from the training set in variety and details), suggesting better learning capabilities.
 
@@ -498,7 +498,7 @@ Similarly to classifier-guidance, sampling can be conditioned with OpenAI CLIP [
 
 ### Classifier-free guidance
 
-[(Ho et al. 2022)](https://openreview.net/pdf?id=qw8AKxfYbI) suggest it is not necessary to train a classifier on noisy data. It could be more efficient to train a single diffusion model on conditional and unconditional data points. Indeed, the paper proposes to a diffusion model by including the label to the signal with a dropout probability (p = 0.1 in the paper experiments). Such random label drop (giving as input data points with zero/null label) allows to learn the data distribution with and without “conditioning”.
+[(Ho et al. 2022)](https://openreview.net/pdf?id=qw8AKxfYbI) suggest it is not necessary to train a classifier on noisy data. It could be more efficient to train a single diffusion model on conditional and unconditional data points. Indeed, the paper proposes to train a diffusion model by including the conditioning label with $p$ probability (p = 0.1 in the paper experiments). Such random label drop (giving as input data points with zero/null label) allows to learn the data distribution with and without “conditioning”.
 
 Follow the conclusions:
 
