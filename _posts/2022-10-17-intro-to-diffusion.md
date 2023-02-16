@@ -25,7 +25,7 @@ toc:
   - name: Deterministic Diffusion Models
   - name: Generalized diffusion models (hot, cold diffusion)
   - name: Latent "Stable" Diffusion
-  - name: Conditioned sampling in Diffusion Models
+  - name: Conditioned, Guided sampling in Diffusion Models
 
 # Below is an example of injecting additional post-specific styles.
 # If you use this post as a template, delete this _styles block.
@@ -46,6 +46,11 @@ _styles: >
   }
 
 ---
+
+### Updates
+
+- *[16/02/2023] Added my notes on [Universal Guidance for Diffusion Models](#universal-guidance)!*
+
 ## Introduction
 
 <!-- Img -->
@@ -423,13 +428,11 @@ For further details: [High-Resolution Image Synthesis with Latent Diffusion Mode
 
 Possibly, a next step could be including this approach to *Generalized Diffusion Models* and test the (conditioned) generation behavior of deterministic diffusion models. 
 
-## Conditioned sampling in Diffusion Models
+## Conditioned, Guided sampling in Diffusion Models
 
-To generate new samples from the learned distribution $\hat{p}(x)$, we apply the diffusion reverse (denoising) process to a random point $\hat{x}_t$ or $x_t$. It is possible to guide this process with additional information such as captions, images, segmentation masks etc. This is known as **conditioning**, three approaches are introduced below:
-
-- Classifier guidance / CLIP guidance
-- Classifier-free guidance
-- Cross attention in latent diffusion
+To generate new samples from the learned distribution $\hat{p}(x)$, we apply the diffusion reverse (denoising) process to a random point $x_t$. It is possible to guide this process with additional information such as captions, images, segmentation masks etc. 
+- With **conditioning**, e.g. image/text tokens are provided as additional input to the denoising network $\epsilon_{\theta}$, which usually needs to be trained.
+- With **guidance**, sampling is oriented with the gradients of some "scoring function" such as text-image matching with CLIP.
 
 ### Classifier guidance
 
@@ -489,12 +492,7 @@ Classifier-guidance in DDIM is summarized with the algorithm:
 
 ### CLIP-guidance
 
-Similarly to classifier-guidance, sampling can be conditioned with OpenAI CLIP [(Radford et al. 2021)](https://arxiv.org/abs/2103.00020). This model consists in an image encoder $f(x)$ and a text encoder $g(c)$; for an image vector $x_0 = f(x)$, a contrastive cross-entropy loss penalizes the dot-product $f(x) \cdot g(c)$ for incompatible captions, while emphasizing the correct one. We start with sampling a random point and encoding it with CLIP along with a caption $c$, the gradients of the “CLIP score” are $\nabla_{x_t} (f(x_t) \cdot g(c))$ (in the sketch indicated as $L$ with caption $u$):
-
-<!-- Img -->
-<div style="text-align: center !important;">
-  <img src="/assets/img/2022-10-17/IMG_C0784AE33AC2-1.jpeg" alt="A sketch of CLIP-guided Diffusion" style="width: 600px;" class="img-fluid rounded z-depth-1"/>
-</div>
+Similarly to classifier-guidance, sampling can be conditioned with OpenAI CLIP [(Radford et al. 2021)](https://arxiv.org/abs/2103.00020). This model consists in an image encoder $f(x)$ and a text encoder $g(c)$; for an image vector $x_0 = f(x)$, a contrastive cross-entropy loss penalizes the dot-product $f(x) \cdot g(c)$ for incompatible captions, while emphasizing the correct one. A random point $x_t$ is encoded with CLIP, $f(x_t)$, along with a caption, such that $g(c)$. The gradients of the “CLIP score” consist in: $\nabla_{x_t} \ell(f(x_t), g(c))$, be $\ell(\cdot, \cdot)$ a loss function or a dot product.
 
 ### Classifier-free guidance
 
@@ -507,6 +505,99 @@ Follow the conclusions:
 - This approach allows to increase the FID with small guidance (higher unconditioned samples), moreover the noise estimator won’t reduce into solutions to trick a guiding classifier (gradient adversarial attack).
 
 Further discussion on classifier-free guidance and clip-guided diffusion can be found here: [GLIDE: Towards Photorealistic Image Generation and Editing with Text-Guided Diffusion Models](https://arxiv.org/abs/2112.10741).
+
+### Universal guidance
+[(Bansal et al. 2023)](https://arxiv.org/abs/2302.07121) extend classifier guidance from [(Dhariwal, Nichol, 2021)](https://arxiv.org/pdf/2105.05233.pdf), with the idea that image sampling can be guided with any auxiliary network: the predicted noise to substract from the signal is "shifted" with the gradients of a loss function.
+
+**Note:** to keep coherence with the paper, I move back to using $z_t$ over $x_t$, the noisy input from the diffusion forward process.
+
+<b>Forward universal guidance</b>: given a guidance function $f$ and a loss $\ell$, the predicted noise is updated as:
+
+$$
+
+\begin{equation} \tag{5}
+    \hat{\epsilon}_{\theta}(z_{t},t)=\epsilon_{\theta}(z_{t},t)+\sqrt{1-\alpha_{t}}\nabla_{z_{t}}\ell_{c e}(c,f_{c l}(z_{t}))
+\end{equation}
+$$
+
+$$
+\begin{equation} \tag{6}
+  \hat{\epsilon}_{\theta}(z_{t},t)=\epsilon_{\theta}(z_{t},t)+s(t)\cdot\nabla_{z_{t}}\ell(c,f(\hat{z}_{0}))
+\end{equation}
+$$
+
+$$
+  \begin{align*}
+  \nabla_{z_{t}}\ell(c,f(\hat{z_{0}}))=\nabla_{z_{t}}\ell\left(z,f\left(\frac{z_{t}-\sqrt{1-\alpha_{t}}\epsilon_{\theta}(z_{t},t)}{\sqrt{\alpha_{t}}}\right)\right)
+  \end{align*}
+$$
+
+Where $c$ is e.g. a classifier label as in [(Dhariwal, Nichol, 2021)](https://arxiv.org/pdf/2105.05233.pdf). From equation $(6)$, $f$ is applied to the clean, denoised data point $\hat{z_0}$ instead of $z_t$ from equation $(5)$, as the auxiliary network may not work well on noisy data. $s(t)$ is a coefficient controlling the "guidance strength": increasing this parameter, however, can excessively shift the generated samples out of the data manifold.
+
+<b>Backward universal guidance</b>: in equation $(6)$ we compute $\hat{z_0} + \Delta z_0$, which directly minimizes $\ell$, instead of $\nabla_{z_{t}}\ell(c,f(\hat{z}_{0}))$. The guided denoising prediction results as:
+
+$$
+\begin{equation}\tag{9}
+  \tilde{\epsilon} = \epsilon_{\theta}\big(\mathcal{z}_{t},t\big) - \sqrt{\alpha_{t}/\big(1\,-\, \alpha_{t}\big)}\Delta\mathcal{z}_{0}
+\end{equation}
+$$
+
+So $\Delta z_0$ is direction that best minimizes $\ell$ and it can achieved with m-step gradient-descent starting from $\Delta = 0$:
+
+$$
+\begin{equation} \tag{7}
+  \Delta z_0 = arg min_{\Delta} \ell(c,f(\hat{z}_{0} + \Delta)
+\end{equation}
+$$
+
+Eventually:
+
+$$
+\begin{equation} \tag{8}
+  \mathcal{z}_{t} = \sqrt{\alpha_{t}}\big(\hat{z}_{0}\,+\,\Delta\mathcal{z}_{0}\big)\,+\,\sqrt{1\,-\,\alpha_{t}}\tilde{\epsilon}
+\end{equation}
+$$
+
+With respect to forward universal guidance, gradient descent in $(7)$ results also cheaper than computing $(6)$.
+
+A major issue is the lack of "realness" in generated samples when the guidance function causes excessive information loss: synthetic images can exhibit artifacts and strange distortions.
+
+Consequently, at each sampling step, gaussian noise $\epsilon^{\prime}\sim\mathcal{N}(0,\mathrm{I})$ is iteratively added back to the computed $z_{t-1} = S(z_t, \hat{\epsilon_{\theta}}, t)$, such that:
+
+$$
+\begin{equation} \tag{10}
+  z_{t}^{\prime}=\sqrt{\alpha_{t}/\alpha_{t-1}}\cdot\ z_{t-1}+\sqrt{1-\alpha_{t}/\alpha_{t-1}}\cdot\epsilon^{\prime}
+\end{equation}
+$$
+
+Each sampling step is repeated multiple teams to explore the data manifold and seek for better reconstructions.
+
+The complete algorithm:
+
+<!-- Img -->
+<div style="text-align: center !important;">
+  <img src="/assets/img/2022-10-17/universalguidance_algo.png" alt="Universal Guidance Algorithm" style="width: 450px;" class="img-fluid rounded z-depth-1"/>
+</div>
+<!-- Caption -->
+<div style="margin-top: 15px; margin-bottom: 30px; text-align: center !important;">
+  <a href="https://arxiv.org/abs/2302.07121">
+    Source: (Bansal et al., 2023)
+  </a>
+</div>
+
+Experiments in the paper show the possibility to condition Stable Diffusion with networks for object detection, style transfer and image segmentation:
+
+<!-- Img -->
+<div style="text-align: center !important;">
+  <img src="/assets/img/2022-10-17/ug_plots.png" alt="Universal Guidance on Stable Diffusion" style="width: 800px;" class="img-fluid rounded z-depth-1"/>
+</div>
+<!-- Caption -->
+<div style="margin-top: 15px; margin-bottom: 30px; text-align: center !important;">
+  <a href="https://arxiv.org/abs/2302.07121">
+    Source: (Bansal et al., 2023)
+  </a>
+</div>
+
 
 ### Conditioning with cross attention in Latent Diffusion
 
