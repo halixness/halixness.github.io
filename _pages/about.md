@@ -4,12 +4,12 @@ title: about
 permalink: /
 subtitle: I study Artificial Intelligence Systems at the <a href='https://en.wikipedia.org/wiki/University_of_Trento'>University of Trento</a>.<br> My research interests include generative models, multi-task/multi-modal learning and emergence. I believe (1) knowledge stems from interaction as well, (2) language is not sufficient, (3) machines shall have a human nature as base. I'm particularly keen on probability theory.
 
-# profile:
-#   align: right
-#   image: prof_pic.jpg
-#   image_circular: false # crops the image to make it circular
-#   address: >
-#     <p>University of Trento, Italy</p>
+#profile:
+#  align: right
+#  image: me.png
+#  image_circular: false # crops the image to make it circular
+#  address: >
+#    <p>University of Trento, Italy</p>
 
 news: true  # includes a list of news items
 selected_papers: true # includes a list of papers marked as "selected={true}"
