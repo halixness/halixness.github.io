@@ -72,7 +72,7 @@ This post aims to provide a broad and complete overview from the foundations to 
 
 ### Learning a data distribution: Metropolis-Hastings Markov Chains
 
-From literature, the building blocks for Diffusion consists in topics from statistics, stochastic optimization and machine learning. While we don’t know the [density](https://en.wikipedia.org/wiki/Probability_density_function) of a target data distribution the [Metropolis-Hastings algorithm](https://en.wikipedia.org/wiki/Metropolis_Hastings_algorithm) (MH) comes to help to generate samples approximating that distribution. Such samples are generated according to a *Markov Chain.*
+From literature, the building blocks for Diffusion consists in topics from statistics, stochastic optimization and machine learning. While we don’t know the [density](https://en.wikipedia.org/wiki/Probability_density_function) of a target data distribution the [Metropolis-Hastings algorithm](https://en.wikipedia.org/wiki/Metropolis%E2%80%93Hastings_algorithm) (MH) comes to help to generate samples approximating that distribution. Such samples are generated according to a *Markov Chain.*
 
 A **Markov chain** (MC) is a sequence of random variables $x_{t}$, where $x_{t} \rightarrow x_{t+1}$ according to a defined transition function. With MH, we can use MC to approximate the data distribution $p(x)$ by generating randomly [(Markov-chain Monte-Carlo)](https://en.wikipedia.org/wiki/Markov_chain_Monte_Carlo) some “acceptable” samples. 
 
@@ -236,7 +236,7 @@ To generate samples, DDPMs involve an iterative, possibly costly sampling proced
     
     Such process is no longer Markovian, since $x_t$ could depend on both $x_{t-1}, x_0$. The magnitude of $\sigma$ determines the stochasticity of the forward process.
     
-- **Reverse** **process:** the sampling distribution $p_\theta^{(t)}(x_{t-1}\mid x_t)$ leverages knowledge from $q_\sigma(x_{t-1} \mid x}_t, x_0)$; in order to sample $x_{t-1}$, $x_t$ and a prediction of $x_0$ are required:
+- **Reverse** **process:** the sampling distribution $p_\theta^{(t)}(x_{t-1}\mid x_t)$ leverages knowledge from $q_\sigma(x_{t-1} \mid x_t, x_0)$; in order to sample $x_{t-1}$, $x_t$ and a prediction of $x_0$ are required:
     
     $$
     f_{\theta}^{(t)}(x_{t}):=(x_{t}-\sqrt{1-\alpha_{t}}\cdot\epsilon_{\theta}^{(t)}(\alpha_{t}))/\sqrt{\alpha_{l}}
