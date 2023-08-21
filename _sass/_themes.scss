@@ -46,7 +46,7 @@ html[data-theme='dark'] {
   --global-footer-link-color: #{$black-color};
   --global-distill-app-color: #{$grey-color-light};
   --global-divider-color: #424246;
-  --global-card-bg-color: rgba(0,0,0,0.1);
+  --global-card-bg-color: transparent;
 
   .fa-sun {
     padding-left: 10px;
@@ -63,4 +63,17 @@ html[data-theme='dark'] {
   .repo-img-dark {
     display: block;
   }
+}
+
+.card-text {
+  color: #B0B0B0 !important;
+}
+
+.card-img {
+  max-width: 250px !important;
+}
+
+.project-card {
+  -webkit-box-shadow: none !important;
+  box-shadow: none !important;
 }
