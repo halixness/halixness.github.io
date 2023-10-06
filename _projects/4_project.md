@@ -5,4 +5,6 @@ description: Implementation of video prediction models to learn shallow water eq
 img: /assets/img/deepswe.gif
 redirect: https://github.com/halixness/deepSWE
 importance: 4
+code: https://github.com/halixness/deepSWE
+paper: /assets/pdf/bsc_thesis.pdf
 ---

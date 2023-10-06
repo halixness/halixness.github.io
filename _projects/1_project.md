@@ -5,4 +5,6 @@ description: Learning collaborative and competitive strategies with multi-agent 
 importance: 1
 img: /assets/img/social_dilemma_games.png
 redirect: /assets/pdf/calanzone_evolution_social_dilemma.pdf
+code: https://github.com/halixness/evolutionary-social-dilemma-games
+paper: /assets/pdf/calanzone_evolution_social_dilemma.pdf
 ---
